@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom"; // Updated import
 import Login from "./components/Login";
-import Create from "./components/Create";
+import CreateConfig from "./components/CreateConfig";
 import Delete from "./components/Delete";
-import Edit from "./components/Edit";
+import EditConfig from "./components/EditConfig";
 
 
 const App = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/Create" element={<Create />} />
+      <Route path="/createconfig" element={<CreateConfig />} />
       <Route path="/Delete" element={<Delete />} />
-      <Route path="/Edit" element={<Edit />} />
+      <Route path="/editconfig" element={<EditConfig />} />
     </Routes>
   </BrowserRouter>
 );

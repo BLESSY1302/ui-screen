@@ -6,13 +6,15 @@ class ACMSDataService {
         return http.post(`/user`, data);
     }
 
+    createConfig(data) {
+        return http.post("/configuration", data);
+    }
+
   /*  get(id) {
         return http.get(`/tutorials/${id}`);
     }
 
-    create(data) {
-        return http.post("/tutorials", data);
-    }
+
 
     update(id, data) {
         return http.put(`/tutorials/${id}`, data);
