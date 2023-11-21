@@ -10,6 +10,14 @@ class ACMSDataService {
         return http.post("/configuration", data);
     }
 
+    editConfig(data) {
+        return http.put("/configuration", data);
+    }
+
+    listConfig() {
+        return http.get(`/configuration`);
+    }
+
   /*  get(id) {
         return http.get(`/tutorials/${id}`);
     }

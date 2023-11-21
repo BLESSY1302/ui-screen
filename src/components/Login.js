@@ -1,6 +1,5 @@
 import React, { Component }  from "react";
 import { Card, Button, Form, Input } from "antd";
-import { Link } from "react-router-dom";
 import ACMSDataService from "../services/acms.service";
 
 class Login extends Component {
@@ -14,7 +13,8 @@ class Login extends Component {
         this.state = {
             userName: "",
             password: "",
-         };
+        };          
+ 
     }
 
     onChangeUserName(e) {
@@ -37,10 +37,11 @@ class Login extends Component {
 
         ACMSDataService.login(data)
             .then(response => {
-                this.setState({
-                      valid: response.data,
-                });
-                console.log(response.data);
+                if (response.data) {
+                    { window.location.assign('configlist') }
+                } else {
+                    alert("Either your username or password incorrect")
+                }
             })
             .catch(e => {
                 console.log(e);
@@ -48,7 +49,7 @@ class Login extends Component {
     }
 
     render() {
- 
+        
         return (
             <div
                 style={{
@@ -143,9 +144,6 @@ class Login extends Component {
           </Button>
                         </Form.Item>
                     </Form>
-                    <Link to="/create"></Link> {/* Link to the Create page */}
-                    <Link to="/delete"></Link> {/* Link to the Delete page */}
-                    <Link to="/edit"></Link> {/* Link to the Edit page */}
                 </Card>
             </div>
         );
@@ -153,7 +151,7 @@ class Login extends Component {
 }
 
 const onFinish = (values) => {
-  console.log("Success:", values);
+  console.log("Success:");
 };
 
 const onFinishFailed = (errorInfo) => {

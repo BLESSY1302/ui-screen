@@ -157,6 +157,7 @@ class CreateConfig extends Component {
             </Button>
                             <Button
                                 type="primary"
+                                href="/configlist"
                                 style={{ backgroundColor: "#00008B", marginLeft: 10 }}
                             >
                                 Cancel

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button, Cascader, Form, Input } from "antd";
 import { Flex } from "antd";
 import ACMSDataService from "../services/acms.service";
+import { useLocation } from 'react-router-dom';
 
 class EditConfig extends Component {
     /*const App = () => {
@@ -18,7 +19,9 @@ class EditConfig extends Component {
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.editConfig = this.editConfig.bind(this);
 
+
         this.state = {
+            id:1,
             configName: "",
             displayName: "",
             configDescription: "",
@@ -59,6 +62,7 @@ class EditConfig extends Component {
 
     editConfig() {
         var data = {
+            id: this.state.id,
             configName: this.state.configName,
             displayName: this.state.displayName,
             configDescription: this.state.configDescription,
@@ -66,7 +70,7 @@ class EditConfig extends Component {
             category: this.state.category
         };
 
-        ACMSDataService.createConfig(data)
+        ACMSDataService.editConfig(data)
             .then(response => {
                 this.setState({
                     valid: response.data,
@@ -79,6 +83,7 @@ class EditConfig extends Component {
     }
 
     render() {
+       
         return (
             <Flex justify="center">
                 <Card
@@ -113,20 +118,42 @@ class EditConfig extends Component {
                         onValuesChange={onFormLayoutChange}
                         size={componentSize}*/
                     >
-                        <Form.Item label="Configuration Name">
+                        <Form.Item label="Id"
+                            //hidden
+                            id="id"
+                        //value={this.props.location.state}
+                        >
                             <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
                         </Form.Item>
-                        <Form.Item label="Display Name">
+                        <Form.Item label="Configuration Name"
+                            id="configName"
+                            value={this.state.configName}
+                            onChange={this.onChangeConfigName}>
                             <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
                         </Form.Item>
-                        <Form.Item label="Description">
+                        <Form.Item label="Display Name"
+                            id="displayName"
+                            value={this.state.displayName}
+                            onChange={this.onChangeDisplayName}>
                             <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
                         </Form.Item>
-                        <Form.Item label="Datatype">
+                        <Form.Item label="Description"
+                            id="configDescription"
+                            value={this.state.configDescription}
+                            onChange={this.onChangeConfigDescription}>
+                            <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
+                        </Form.Item>
+                        <Form.Item label="Datatype"
+                            id="dataType"
+                            value={this.state.dataType}
+                            onChange={this.onChangeDataType}>
                             <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
                         </Form.Item>
 
-                        <Form.Item label="Category">
+                        <Form.Item label="Category"
+                            id="category"
+                            value={this.state.category}
+                            onChange={this.onChangeCategory}>
                             <Cascader
                                 options={[
                                     {
@@ -165,7 +192,9 @@ class EditConfig extends Component {
                 </Card>
             </Flex>
         );
+
     };
+
 }
 
 export default EditConfig;
