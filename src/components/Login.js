@@ -38,7 +38,12 @@ class Login extends Component {
         ACMSDataService.login(data)
             .then(response => {
                 if (response.data) {
-                    { window.location.assign('configlist') }
+                    if (data.userName == "admin") {
+                        { window.location.assign('configlist') }
+                    } else {
+                        { window.location.assign('configvallist') }
+                    }
+                    
                 } else {
                     alert("Either your username or password incorrect")
                 }

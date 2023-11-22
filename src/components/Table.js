@@ -26,13 +26,12 @@ const Table = (props) => {
                 <td class="d">{item.dataType}</td>
                 <td class="e">{item.configDescription}</td>
                 <td class="f">
-                    <Link
-                        to={'/editConfig'}
-                        state="{id:1}">Learn More</Link> 
-                       
-                    <Button type="button" id="deleteConfigButton" value="{item.id}">
-                DELETE
-              </Button>
+                    <Button type="button" id="editConfigButton" value="edit_{item.id}">
+                        EDIT
+                    </Button>                       
+                    <Button type="button" id="deleteConfigButton" value="delete_{item.id}">
+                         DELETE
+                    </Button>
             </td>
           </tr>
         ))}

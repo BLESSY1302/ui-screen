@@ -12,7 +12,7 @@ class CreateConfig extends Component {
         this.onChangeConfigDescription = this.onChangeConfigDescription.bind(this);
         this.onChangeDataType = this.onChangeDataType.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
-        this.onChangeCategory = this.onChangeCategory.bind(this);
+        this.createConfig = this.createConfig.bind(this);
         this.clearConfigFields = this.clearConfigFields.bind(this);
 
         this.state = {
@@ -65,10 +65,7 @@ class CreateConfig extends Component {
 
         ACMSDataService.createConfig(data)
             .then(response => {
-                this.setState({
-                    valid: response.data,
-                });
-                console.log(response.data);
+                 { window.location.assign('configlist') }                
             })
             .catch(e => {
                 console.log(e);
@@ -207,7 +204,7 @@ class CreateConfig extends Component {
             </Button>
                             </Form.Item>
                         </Form>
-                        <Link to="/delete"></Link> {/* Link to the Delete page */}
+                        
                     </Card>
                 </Flex>
             );

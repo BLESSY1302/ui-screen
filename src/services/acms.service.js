@@ -11,13 +11,16 @@ class ACMSDataService {
     }
 
     editConfig(data) {
-        return http.put("/configuration", data);
+        return http.patch("/configuration", data);
     }
 
     listConfig() {
         return http.get(`/configuration`);
     }
 
+    deleteConfig() {
+        return http.delete(`/configuration`);
+    }
   /*  get(id) {
         return http.get(`/tutorials/${id}`);
     }

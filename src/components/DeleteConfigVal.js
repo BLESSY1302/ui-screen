@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Button } from "antd";
 import { Link } from "react-router-dom";
 
-const Delete = () => (
+const DeleteConfigVal = () => (
   <div
     style={{
       display: "flex",
@@ -12,7 +12,7 @@ const Delete = () => (
     }}
   >
     <Card
-      title="DELETE CONFIGURATION"
+      title="DELETE CONFIGURATION VALUE"
       bordered={false}
       headStyle={{
         backgroundColor: "#00008B",
@@ -25,7 +25,7 @@ const Delete = () => (
         boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)"
       }}
     >
-      <p>Are you sure you want to delete this configuration?</p>
+      <p>Are you sure you want to delete this configuration value?</p>
       <Button
         type="primary"
         style={{ marginRight: "90px", backgroundColor: "#00008B" }}
@@ -40,4 +40,4 @@ const Delete = () => (
   </div>
 );
 
-export default Delete;
+export default DeleteConfigVal;
