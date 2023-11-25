@@ -13,6 +13,7 @@ class Login extends Component {
         this.state = {
             userName: "",
             password: "",
+            isValid: true
         };          
  
     }
@@ -38,6 +39,7 @@ class Login extends Component {
         ACMSDataService.login(data)
             .then(response => {
                 if (response.data) {
+                    this.setState({ isValid: true });
                     if (data.userName == "admin") {
                         { window.location.assign('configlist') }
                     } else {
@@ -45,10 +47,11 @@ class Login extends Component {
                     }
                     
                 } else {
-                    alert("Either your username or password incorrect")
+                    this.setState({ isValid: false });
                 }
             })
             .catch(e => {
+                this.setState({ isValid: false });
                 console.log(e);
             });
     }
@@ -96,6 +99,7 @@ class Login extends Component {
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
+                        {!this.state.isValid && < span style={{ color: 'red' }}>Incorrect username or password!</span>}
                         <Form.Item
                             label="Username"
                             name="userName"

@@ -3,7 +3,11 @@ import { Button } from "antd";
 import { Link } from "react-router-dom";
 
 const Table = (props) => {
-  const { data } = props;
+    const { data } = props;
+
+    function editConfig(id) {
+        window.location.href = `/editconfig/?id=${id}`
+    }
 
   return (
     <table>
@@ -26,10 +30,10 @@ const Table = (props) => {
                 <td class="d">{item.dataType}</td>
                 <td class="e">{item.configDescription}</td>
                 <td class="f">
-                    <Button type="button" id="editConfigButton" value="edit_{item.id}">
+                    <Button type="button" id="editConfigButton" onClick={()=>editConfig(item.id)}>
                         EDIT
                     </Button>                       
-                    <Button type="button" id="deleteConfigButton" value="delete_{item.id}">
+                    <Button type="button" id="deleteConfigButton" value={item.id}>
                          DELETE
                     </Button>
             </td>

@@ -14,6 +14,10 @@ class ACMSDataService {
         return http.patch("/configuration", data);
     }
 
+    getConfig(id) {        
+        return http.get(`/configuration/${id}`);
+    }
+
     listConfig() {
         return http.get(`/configuration`);
     }
