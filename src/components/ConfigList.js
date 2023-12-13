@@ -11,29 +11,22 @@ class ConfigList extends Component {
         this.state = {
             configurations: []
         }
+       // this.state = { clients: [] };
+      //  this.remove = this.remove.bind(this);
     }
 
     componentDidMount() {
   
         ACMSDataService.listConfig()
             .then(res => res.data)
-            .then(
-                (configurations) => {
-                    this.setState({ configurations: configurations });
-                },
-                (error) => {
-                    alert(error);
-                }
-            )
+            .then(data => this.setState({ configurations: data }))
             .catch(e => {
                 console.log(e);
             });
     }
  
     render() {
-
-       const configurations = [];
-
+        const { configurations } = this.state;
         return (
             <div>
                 <div class="text">

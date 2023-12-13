@@ -41,9 +41,9 @@ class Login extends Component {
                 if (response.data) {
                     this.setState({ isValid: true });
                     if (data.userName == "admin") {
-                        { window.location.assign('configlist') }
+                        { window.location.assign('configurations') }
                     } else {
-                        { window.location.assign('configvallist') }
+                        { window.location.assign('configvalues') }
                     }
                     
                 } else {

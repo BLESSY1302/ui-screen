@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ValueTable = (props) => {
   const { data } = props;
-
+    const shouldRenderContent = true;
   return (
     <table>
       <thead>
@@ -21,24 +21,19 @@ const ValueTable = (props) => {
             <td class="b">{item.configName}</td>
                 <td class="f">{item.configValue}</td>
                 <td class="g">
-{/*                    <Link
-                        to={'/addConfigVal'}
-                        state="{id:1}">ADD VALUE</Link>
-                    <Link
-                        to={'/editConfigVal'}
-                        state="{id:1}">EDIT</Link> 
-                    <Link
-                        to={'/deleteConfigVal'}
-                        state="{id:1}">DELETE</Link>*/}
-                    <Button type="button" id="addConfigValButton" value="addval_{item.id}">
-                        ADD
-                    </Button>
-                    <Button type="button" id="editConfigValButton" value="editval_{item.id}">
-                        EDIT
-                    </Button>
-                    <Button type="button" id="deleteConfigValButton" value="deleteval_{item.id}">
-                        DELETE
-                    </Button>
+                     { item.configValue ? (
+                        <Link id={`editConfigVal_${item.id}`} to={`/editconfigval?id=${item.id}`} style={{
+                            position: "static"
+                        }}>EDIT</Link>
+                    ) : (
+                            <Link id={`addConfigVal_${item.id}`} to={`/createconfigval?id=${item.id}`} style={{
+                                position: "static"
+                            }}>ADD</Link>
+                    )}
+                    <Link id={`deleteConfigVal_${item.id}`} to={`/deleteconfigval?id=${item.id}`} style={{
+                        marginLeft: 50,
+                        position: "static"
+                    }}>DELETE</Link>
             </td>
           </tr>
         ))}

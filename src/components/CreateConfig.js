@@ -13,7 +13,7 @@ class CreateConfig extends Component {
         this.onChangeDataType = this.onChangeDataType.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.createConfig = this.createConfig.bind(this);
-        this.clearConfigFields = this.clearConfigFields.bind(this);
+        //this.clearConfigFields = this.clearConfigFields.bind(this);
 
         this.state = {
             configName: "",
@@ -65,7 +65,7 @@ class CreateConfig extends Component {
 
         ACMSDataService.createConfig(data)
             .then(response => {
-                 { window.location.assign('configlist') }                
+                 { window.location.assign('configurations') }                
             })
             .catch(e => {
                 console.log(e);
@@ -82,8 +82,19 @@ class CreateConfig extends Component {
         });
     }
 
+    handleReset = () => {
+        console.log("hfffgggggg====");
+        this.setState({
+            configName: "",
+            displayName: "",
+            configDescription: "",
+            dataType: "",
+            category: ""
+        });
+    };
+
     navigateToConfigListPage() {
-        { window.location.assign('configlist') }
+        { window.location.assign('configurations') }
     }
 
     render() {
@@ -192,7 +203,7 @@ class CreateConfig extends Component {
             </Button>
                                 <Button
                                     type="primary"
-                                    onClick={this.clearConfigFields}
+                                    onClick={this.handleReset}
                                     style={{
                                         backgroundColor: "#00008B",
                                         marginRight: 10,

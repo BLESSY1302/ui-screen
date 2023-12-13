@@ -32,9 +32,7 @@ class ConfigValList extends Component {
  
     render() {
 
-       const configurations = [];
-
-        return (
+      return (
             <div>
                 <div class="text">
                     <h1>APPLICATION CONFIGURATION MANAGEMENT SYSTEM</h1>

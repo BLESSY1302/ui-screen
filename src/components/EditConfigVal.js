@@ -1,107 +1,127 @@
-import React from "react";
-import { Card, Button, Form, Input, DatePicker } from "antd";
+import React, { Component } from "react";
+import { Card, Button, Form, Input } from "antd";
 import { Flex } from "antd";
+import ACMSDataService from "../services/acms.service";
 
-const EditConfigVal = () => {
-  const [componentSize, setComponentSize] = React.useState("default");
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
-  };
+class EditConfigVal extends Component {
+    emptyItem = {
+        id: '',
+        configName: '',
+        configValue: '',
+    };
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
-  // Define a custom style object for inputs
-  const customInputStyle = { borderColor: "#00008B", borderRadius: "2px" };
+        this.state = {
+            item: this.emptyItem
+        };
+    }
 
-  return (
-    <Flex justify="center">
-      <Card
-        title="Edit Configuration Value"
-        bordered={false}
-        headStyle={{
-          backgroundColor: "#00008B",
-          color: "#fff"
-        }}
-        style={{
-          width: 300,
-          border: "2px solid #00008B",
-          borderRadius: "10px",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "70px"
-        }}
-      >
-        <Form
-          labelCol={{
-            span: 13
-          }}
-          wrapperCol={{
-            span: 14
-          }}
-          layout="horizontal"
-          initialValues={{
-            size: componentSize
-          }}
-          onValuesChange={onFormLayoutChange}
-          size={componentSize}
-        >
-          
-         <Form.Item label="Configuration Name" name="configName">
-                      <Input style={customInputStyle} readOnly="readOnly"/>
-         </Form.Item>
+    async componentDidMount() {
+        const searchParams = new URLSearchParams(window.location.search);
+        const id = searchParams.get('id');
+        ACMSDataService.getConfig(id)
+            .then(res => {
+                this.setState({ item: res.data });
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
-{/*         <Form.Item label="Value 1" name="value1"
-            rules={[
-              { type: 'number', message: 'Please enter a valid number' },
-              { required: true, message: 'Please enter a number' },
-            ]}
-         >
-           <Input style={customInputStyle} type="number" />
-         </Form.Item>*/}
+    handleChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        let item = { ...this.state.item };
+        item[name] = value;
+        this.setState({ item });
+    }
 
-                  <Form.Item label="Value" name="value"
-                      rules={[
-                          { required: true, message: 'Please enter a value' }
-                      ]}
-                  >
-                      <Input style={customInputStyle} />
-                  </Form.Item>
+    async handleSubmit(event) {
+        event.preventDefault();
+        const { item } = this.state;
 
-{/*         <Form.Item label="Value 3" name="value3"
-            rules={[
-              { type:'object', required:true, message:'Please select a date' }
-            ]}
-         >
-           <DatePicker style={customInputStyle} />
-         </Form.Item>*/}
+        await ACMSDataService.editConfig(item)
+            .then(response => {
+                { window.location.assign('configvalues') }
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    }
 
+    navigateToConfigValListPage() {
+        { window.location.assign('configvalues') }
+    }
 
-         <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
+    render() {
+        const { item } = this.state;
+        return (
+            <Flex justify="center">
+                <Card
+                    title="Create Configuration Value"
+                    bordered={false}
+                    headStyle={{
+                        backgroundColor: "#00008B",
+                        color: "#fff"
+                    }}
+                    style={{
+                        width: 300,
+                        border: "2px solid #00008B",
+                        borderRadius: "10px",
+                        boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "70px"
+                    }}
+                >
+                    <Form
+                        labelCol={{
+                            span: 13
+                        }}
+                        wrapperCol={{
+                            span: 14
+                        }}
+                        layout="horizontal"
+                    >
+
+                        <Form.Item label="Id" hidden>
+                            <Input type="text" name="id" id="id" value={item.id || ''}
+                                onChange={this.handleChange} autoComplete="id" />
+                        </Form.Item>
+                        <Form.Item label="Configuration Name">
+                            <Input type="text" name="configName" id="configName" value={item.configName || ''}
+                                onChange={this.handleChange} autoComplete="configName" readOnly />
+                        </Form.Item>
+
+                        <Form.Item label="Value"
+                            rules={[
+                                { required: true, message: 'Please enter a value' }
+                            ]}
+                        >
+                            <Input type="text" name="configValue" id="configValue" value={item.configValue || ''}
+                                onChange={this.handleChange} autoComplete="configValue" />
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
                             <Flex>
-                                <Button type="primary" style={{ backgroundColor: "#00008B", marginRight: 10 }}>
+                                <Button type="primary" onClick={this.handleSubmit} style={{ backgroundColor: "#00008B", marginRight: 10 }}>
                                     Update
                 </Button>
-                                <Button type="primary" style={{ backgroundColor: "#00008B", marginRight: 10 }}>
+                                <Button type="primary" onClick={this.navigateToConfigValListPage} style={{ backgroundColor: "#00008B", marginRight: 10 }}>
                                     Cancel
                 </Button>
                             </Flex>
 
-                            <Button
-                                type="primary"
-                                style={{
-                                    backgroundColor: "#00008B",
-
-                                    marginRight: 10,
-                                    marginLeft: 35,
-                                    marginTop: 10
-                                }}
-                            >
-                                Reset
-              </Button>
                         </Form.Item>
                     </Form>
                 </Card>
             </Flex>
- );
-};
+        );
+    }
+}
 
 export default EditConfigVal;

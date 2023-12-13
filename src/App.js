@@ -14,11 +14,11 @@ const App = () => (
   <BrowserRouter>
     <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/configlist" element={<ConfigList />} />
+            <Route path="/configurations" exact={true} element={<ConfigList />} />
             <Route path="/createconfig" element={<CreateConfig />} />
             <Route path="/deleteconfig" element={<DeleteConfig />} />
             <Route path="/editconfig" element={<EditConfig />} />
-            <Route path="/configvallist" element={<ConfigValList />} />
+            <Route path="/configvalues" element={<ConfigValList />} />
             <Route path="/createconfigval" element={<CreateConfigVal />} />
             <Route path="/deleteconfigval" element={<DeleteConfigVal />} />
             <Route path="/editconfigval" element={<EditConfigVal />} />

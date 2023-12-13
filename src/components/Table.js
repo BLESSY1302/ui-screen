@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const Table = (props) => {
     const { data } = props;
 
-    function editConfig(id) {
-        window.location.href = `/editconfig/?id=${id}`
-    }
+/*    function editConfig(id) {
+        window.location.href = `editconfig/?id=${id}`
+    }*/
 
   return (
     <table>
@@ -23,19 +23,20 @@ const Table = (props) => {
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <tr key={index}>
+            <tr key={index} id={`${item.id}`}>
                 <td class="a">{item.category}</td>
-            <td class="b">{item.configName}</td>
+                <td class="b">{item.configName}</td>
                 <td class="c">{item.displayName}</td>
                 <td class="d">{item.dataType}</td>
                 <td class="e">{item.configDescription}</td>
-                <td class="f">
-                    <Button type="button" id="editConfigButton" onClick={()=>editConfig(item.id)}>
-                        EDIT
-                    </Button>                       
-                    <Button type="button" id="deleteConfigButton" value={item.id}>
-                         DELETE
-                    </Button>
+                <td class="f">                    
+                    <Link id={`editConfig_${item.id}`} to={`/editconfig?id=${item.id}`} style={{
+                         position: "static"
+                    }}>EDIT</Link>
+                    <Link id={`deleteConfig_${item.id}`}  to={`/deleteconfig?id=${item.id}`} style={{
+                        marginLeft: 50,
+                        position: "static"
+                    }}>DELETE</Link>
             </td>
           </tr>
         ))}
