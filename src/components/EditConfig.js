@@ -36,14 +36,6 @@ class EditConfig extends Component {
             });
     }
 
-    handleDataTypeChange = (event) => {
-        this.setState({ dataType: event.target.value });
-    };
-
-    handleCategoryChange = (event) => {
-        this.setState({ category: event.target.value });
-    };
-
     handleChange(event) {
         const target = event.target;
         const value = target.value;
@@ -56,9 +48,7 @@ class EditConfig extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const { item } = this.state;
-        this.state.item.dataType = this.state.dataType;
-        this.state.item.category = this.state.category;
-
+        
         await ACMSDataService.editConfig(item)
             .then(response => {
                 { window.location.assign('configurations') }
@@ -121,7 +111,7 @@ class EditConfig extends Component {
                         </Form.Item>
  
                         {<Form.Item label="Datatype">
-                            <select value={item.dataType} onChange={this.handleDataTypeChange}>
+                            <select value={item.dataType} name="dataType" onChange={this.handleChange}>
                                 <option value="Numeric">Numeric</option>
                                 <option value="String">String</option>
                                 <option value="Date">Date</option>
@@ -129,7 +119,7 @@ class EditConfig extends Component {
                         </Form.Item>}
 
                         <Form.Item label="Category">
-                            <select value={item.category} onChange={this.handleCategoryChange}>
+                            <select value={item.category} name="category" onChange={this.handleChange}>
                                 <option value="Project Config">Project Config</option>
                                 <option value="Application Config">Application Config</option>
                             </select>                            

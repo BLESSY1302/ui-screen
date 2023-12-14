@@ -16,10 +16,8 @@ class CreateConfig extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.onChangeDataType = this.onChangeDataType.bind(this);
-        this.onChangeCategory = this.onChangeCategory.bind(this);
         this.createConfig = this.createConfig.bind(this);
-        //this.clearConfigFields = this.clearConfigFields.bind(this);
+       // this.clearConfigFields = this.clearConfigFields.bind(this);
 
         this.state = {
             item: this.emptyItem
@@ -33,18 +31,6 @@ class CreateConfig extends Component {
         let item = { ...this.state.item };
         item[name] = value;
         this.setState({ item });
-    }
-
-    onChangeDataType(e) {
-        this.setState({
-            dataType: e.target.value
-        });
-    }
-
-    onChangeCategory(e) {
-        this.setState({
-            category: e.target.value
-        });
     }
 
     createConfig() {
@@ -64,25 +50,15 @@ class CreateConfig extends Component {
             });
     }
 
-    clearConfigFields() {
-        this.setState({
-            configName: "",
-            displayName: "",
-            configDescription: "",
-            dataType: "",
-            category: ""
-        });
+    handleReset = () => {
+         this.state = {
+             item: {
+                 id: '',
+                 configName: '',
+                 displayName: '',
+                 configDescription: ''}
+        };
     }
-
-    handleReset = () => {       
-        this.setState({
-            configName: "",
-            displayName: "",
-            configDescription: "",
-            dataType: "",
-            category: ""
-        });
-    };
 
     navigateToConfigListPage() {
         { window.location.assign('configurations') }
@@ -132,7 +108,7 @@ class CreateConfig extends Component {
                                     onChange={this.handleChange} autoComplete="configDescription" />
                             </Form.Item>
                            <Form.Item label="Datatype">
-                                <select value={this.state.dataType} onChange={this.onChangeDataType}>
+                                <select value={this.state.dataType} name="dataType" onChange={this.handleChange}>
                                     <option value="Numeric">Numeric</option>
                                     <option value="String">String</option>
                                     <option value="Date">Date</option>
@@ -140,7 +116,7 @@ class CreateConfig extends Component {
                             </Form.Item>
 
                             <Form.Item label="Category">
-                                <select value={this.state.category} onChange={this.onChangeCategory}>
+                                <select value={this.state.category} name="category" onChange={this.handleChange}>
                                     <option value="Project Config">Project Config</option>
                                     <option value="Application Config">Application Config</option>
                                 </select>

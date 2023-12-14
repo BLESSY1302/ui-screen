@@ -7,7 +7,7 @@ class CreateConfigVal extends Component {
     emptyItem = {
         id: '',
         configName: '',
-        configValue: '',
+        configValue: ''
     };
     constructor(props) {
         super(props);
@@ -15,13 +15,17 @@ class CreateConfigVal extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
-            item: this.emptyItem
+            item: this.emptyItem,
+            dataType: 'Numeric'
         };
     }
 
     async componentDidMount() {
         const searchParams = new URLSearchParams(window.location.search);
         const id = searchParams.get('id');
+        const dt = searchParams.get('dt');        
+        this.setState({ dataType: dt });
+
          ACMSDataService.getConfig(id)
             .then(res => {
                 this.setState({ item: res.data });
@@ -59,6 +63,8 @@ class CreateConfigVal extends Component {
 
     render() {
         const { item } = this.state;
+        const currentDate = new Date().toISOString().split('T')[0];
+
         return (
             <Flex justify="center">
                 <Card
@@ -102,8 +108,12 @@ class CreateConfigVal extends Component {
                                 { required: true, message: 'Please enter a value' }
                             ]}
                         >
-                            <Input type="text" name="configValue" id="configValue" value={item.configValue || ''}
-                                onChange={this.handleChange} autoComplete="configValue" />
+                            {this.state.dataType == 'Numeric' && <Input type="number" name="configValue" id="configValue" value={item.configValue || ''}
+                                onChange={this.handleChange} autoComplete="configValue" />}
+                            {this.state.dataType == 'String' && <Input type="text" name="configValue" id="configValue" value={item.configValue || ''}
+                                onChange={this.handleChange} autoComplete="configValue" />}
+                            {this.state.dataType == 'Date' && <Input type="date" max={currentDate} name="configValue" id="configValue" value={item.configValue || ''}
+                                onChange={this.handleChange} autoComplete="configValue" />}
                         </Form.Item>
 
                         <Form.Item wrapperCol={{ offset: 6, span: 14 }}>

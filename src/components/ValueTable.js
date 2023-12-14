@@ -9,7 +9,8 @@ const ValueTable = (props) => {
     <table>
       <thead>
         <tr>
-           <th>CONFIG NAME</th>
+                  <th>CONFIG NAME</th>
+                  <th>DATA TYPE</th>
                   <th>CONFIG VALUE</th>
           <th>ACTIONS</th>
         </tr>
@@ -18,15 +19,16 @@ const ValueTable = (props) => {
         {data.map((item, index) => (
           <tr key={index}>
                 
-            <td class="b">{item.configName}</td>
+                <td class="b">{item.configName}</td>
+                <td class="f">{item.dataType}</td>
                 <td class="f">{item.configValue}</td>
                 <td class="g">
                      { item.configValue ? (
-                        <Link id={`editConfigVal_${item.id}`} to={`/editconfigval?id=${item.id}`} style={{
+                        <Link id={`editConfigVal_${item.id}`} to={`/editconfigval?id=${item.id}&dt=${item.dataType}`} style={{
                             position: "static"
                         }}>EDIT</Link>
                     ) : (
-                            <Link id={`addConfigVal_${item.id}`} to={`/createconfigval?id=${item.id}`} style={{
+                            <Link id={`addConfigVal_${item.id}`} to={`/createconfigval?id=${item.id}&dt=${item.dataType}`} style={{
                                 position: "static"
                             }}>ADD</Link>
                     )}
