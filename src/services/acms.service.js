@@ -11,7 +11,7 @@ class ACMSDataService {
     }
 
     editConfig(data) {
-        return http.patch("/configuration", data);
+        return http.put("/configuration", data);
     }
 
     getConfig(id) {        

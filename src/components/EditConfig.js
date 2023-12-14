@@ -11,7 +11,8 @@ class EditConfig extends Component {
         displayName: '',
         configDescription: '',
         dataType: '',
-        category: ''
+        category: '',
+        updatedBy: ''
     };
     constructor(props) {
         super(props);
@@ -48,7 +49,8 @@ class EditConfig extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const { item } = this.state;
-        
+        item.updatedBy = 'admin';
+
         await ACMSDataService.editConfig(item)
             .then(response => {
                 { window.location.assign('configurations') }

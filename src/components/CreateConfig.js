@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Card, Button, Cascader, Form, Input } from "antd";
+import { Card, Button, Form, Input } from "antd";
 import { Flex } from "antd";
-import { Link } from "react-router-dom";
 import ACMSDataService from "../services/acms.service";
 
 class CreateConfig extends Component {
@@ -11,13 +10,13 @@ class CreateConfig extends Component {
         displayName: '',
         configDescription: '',
         dataType: '',
-        category: ''
+        category: '',
+        createdBy: ''
     };
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.createConfig = this.createConfig.bind(this);
-       // this.clearConfigFields = this.clearConfigFields.bind(this);
 
         this.state = {
             item: this.emptyItem
@@ -38,9 +37,11 @@ class CreateConfig extends Component {
         this.state.item.dataType = this.state.dataType;
         this.state.item.category = this.state.category;
         if (item.dataType == undefined)
-            item.dataType = "Numeric";
+            item.dataType = 'Numeric';
         if (item.category == undefined)
-            item.category = "Project Config";
+            item.category = 'Project Config';
+        item.createdBy = 'admin';
+
         ACMSDataService.createConfig(item)
             .then(response => {
                  { window.location.assign('configurations') }                

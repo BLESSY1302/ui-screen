@@ -8,6 +8,7 @@ class EditConfigVal extends Component {
         id: '',
         configName: '',
         configValue: '',
+        updatedBy: ''
     };
     constructor(props) {
         super(props);
@@ -47,6 +48,7 @@ class EditConfigVal extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         const { item } = this.state;
+        item.updatedBy = 'user';
 
         await ACMSDataService.editConfig(item)
             .then(response => {

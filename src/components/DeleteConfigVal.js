@@ -6,6 +6,7 @@ class DeleteConfig extends Component {
     emptyItem = {
         id: '',
         configValue: '',
+        updatedBy: ''
     };
     constructor(props) {
         super(props);
@@ -24,6 +25,8 @@ class DeleteConfig extends Component {
         const { item } = this.state;
         item['id'] = id;
         item['configValue'] = '';
+        item['updatedBy'] = 'user';
+
         ACMSDataService.editConfig(item)
             .then(response => {
                 { window.location.assign('configvalues') }

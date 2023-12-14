@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, Button } from "antd";
-import { Link } from "react-router-dom";
 import ACMSDataService from "../services/acms.service";
 
 class DeleteConfig extends Component {
