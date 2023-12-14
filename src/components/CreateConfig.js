@@ -5,41 +5,34 @@ import { Link } from "react-router-dom";
 import ACMSDataService from "../services/acms.service";
 
 class CreateConfig extends Component {
+    emptyItem = {
+        id: '',
+        configName: '',
+        displayName: '',
+        configDescription: '',
+        dataType: '',
+        category: ''
+    };
     constructor(props) {
         super(props);
-        this.onChangeConfigName = this.onChangeConfigName.bind(this);
-        this.onChangeDisplayName = this.onChangeDisplayName.bind(this);
-        this.onChangeConfigDescription = this.onChangeConfigDescription.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.onChangeDataType = this.onChangeDataType.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.createConfig = this.createConfig.bind(this);
         //this.clearConfigFields = this.clearConfigFields.bind(this);
 
         this.state = {
-            configName: "",
-            displayName: "",
-            configDescription: "",
-            dataType: "",
-            category: ""
-         };
+            item: this.emptyItem
+        };
     }
 
-    onChangeConfigName(e) {
-        this.setState({
-            configName: e.target.value
-        });
-    }
-
-    onChangeDisplayName(e) {
-        this.setState({
-            displayName: e.target.value
-        });
-    }
-
-    onChangeConfigDescription(e) {
-        this.setState({
-            configDescription: e.target.value
-        });
+    handleChange(event) {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        let item = { ...this.state.item };
+        item[name] = value;
+        this.setState({ item });
     }
 
     onChangeDataType(e) {
@@ -55,15 +48,14 @@ class CreateConfig extends Component {
     }
 
     createConfig() {
-        var data = {
-            configName: this.state.configName,
-            displayName: this.state.displayName,
-            configDescription: this.state.configDescription,
-            dataType: this.state.dataType,
-            category: this.state.category
-        };
-
-        ACMSDataService.createConfig(data)
+        const { item } = this.state;
+        this.state.item.dataType = this.state.dataType;
+        this.state.item.category = this.state.category;
+        if (item.dataType == undefined)
+            item.dataType = "Numeric";
+        if (item.category == undefined)
+            item.category = "Project Config";
+        ACMSDataService.createConfig(item)
             .then(response => {
                  { window.location.assign('configurations') }                
             })
@@ -82,8 +74,7 @@ class CreateConfig extends Component {
         });
     }
 
-    handleReset = () => {
-        console.log("hfffgggggg====");
+    handleReset = () => {       
         this.setState({
             configName: "",
             displayName: "",
@@ -98,7 +89,7 @@ class CreateConfig extends Component {
     }
 
     render() {
-        
+        const { item } = this.state;
             return (
                 <Flex justify="center">
                     <Card
@@ -128,64 +119,31 @@ class CreateConfig extends Component {
                             }}
                             layout="horizontal"
                          >
-                            <Form.Item label="Configuration Name"
-                                id="configName"
-                                value={this.state.configName}
-                                onChange={this.onChangeConfigName}>
-                                <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
+                            <Form.Item label="Configuration Name">
+                                <Input type="text" name="configName" id="configName" value={item.configName || ''}
+                                    onChange={this.handleChange} autoComplete="configName" />
                             </Form.Item>
-                            <Form.Item label="Display Name"
-                                id="displayName"
-                                value={this.state.displayName}
-                                onChange={this.onChangeDisplayName}>
-                                <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
+                            <Form.Item label="Display Name">
+                                <Input type="text" name="displayName" id="displayName" value={item.displayName || ''}
+                                    onChange={this.handleChange} autoComplete="displayName" />
                             </Form.Item>
-                            <Form.Item label="Description"
-                                id="configDescription"
-                                value={this.state.configDescription}
-                                onChange={this.onChangeConfigDescription}>
-                                <Input style={{ borderColor: "#00008B", borderRadius: "2px" }} />
+                            <Form.Item label="Description">
+                                <Input type="text" name="configDescription" id="configDescription" value={item.configDescription || ''}
+                                    onChange={this.handleChange} autoComplete="configDescription" />
                             </Form.Item>
-                            <Form.Item label="Datatype"
-                                id="dataType"
-                                value={this.state.dataType}
-                                onChange={this.onChangeDataType}>
-                                <Cascader
-                                    options={[
-                                        {
-                                            value: "numeric",
-                                            label: "Numeric"
-                                        },
-                                        {
-                                            value: "string",
-                                            label: "String"
-                                        },
-                                        {
-                                            value: "date",
-                                            label: "Date"
-                                        }
-                                    ]}
-                                    style={{ borderColor: "#00008B" }}
-                                />
+                           <Form.Item label="Datatype">
+                                <select value={this.state.dataType} onChange={this.onChangeDataType}>
+                                    <option value="Numeric">Numeric</option>
+                                    <option value="String">String</option>
+                                    <option value="Date">Date</option>
+                                </select>
                             </Form.Item>
 
-                            <Form.Item label="Category"
-                                id="category"
-                                value={this.state.category}
-                                onChange={this.onChangeCategory}>
-                                <Cascader
-                                    options={[
-                                        {
-                                            value: "projectconfiguration",
-                                            label: "Project Configuration"
-                                        },
-                                        {
-                                            value: "appconfiguration",
-                                            label: "Application Configuration"
-                                        }
-                                    ]}
-                                    style={{ borderColor: "#00008B" }}
-                                />
+                            <Form.Item label="Category">
+                                <select value={this.state.category} onChange={this.onChangeCategory}>
+                                    <option value="Project Config">Project Config</option>
+                                    <option value="Application Config">Application Config</option>
+                                </select>
                             </Form.Item>
 
                             <Form.Item wrapperCol={{ offset: 6, span: 14 }}>
